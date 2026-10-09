@@ -145,3 +145,102 @@ body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color
   .filters { grid-template-columns: 1fr; }
   .user-chip div { display: none; }
 }
+/* ============ MOBILE & TABLET FIXES ============ */
+@media (max-width: 900px) {
+  /* Hide the sidebar on mobile — replace with a top nav */
+  .sidebar {
+    position: fixed;
+    bottom: 0;
+    top: auto;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 8px;
+    border-right: none;
+    border-top: 1px solid var(--border);
+    z-index: 100;
+  }
+  .sidebar .brand { display: none; }
+  .sidebar-footer { display: none; }
+  .sidebar nav { display: flex; flex-direction: row; width: 100%; justify-content: space-around; }
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 8px;
+    font-size: 0.7rem;
+    border-radius: 8px;
+    margin: 0;
+  }
+  .nav-item.active { background: var(--primary); }
+
+  /* Shift main content up to make room for bottom nav */
+  .main {
+    margin-left: 0;
+    padding: 16px 16px 90px;
+  }
+
+  /* Topbar: stack title + button */
+  .topbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .topbar h1 { font-size: 1.5rem; }
+  .topbar .btn-primary {
+    width: 100%;
+    padding: 14px;
+  }
+
+  /* Stat cards: 1 column on mobile */
+  .stat-grid { grid-template-columns: 1fr; gap: 14px; }
+  .stat-card h2 { font-size: 1.6rem; }
+
+  /* 2-column grids become 1 column */
+  .grid-2 { grid-template-columns: 1fr; gap: 16px; }
+
+  /* Filters become stacked */
+  .filters { grid-template-columns: 1fr; gap: 10px; }
+
+  /* Cards: reduce padding */
+  .card { padding: 18px; }
+
+  /* Charts: ensure they fit */
+  canvas { max-width: 100% !important; height: auto !important; }
+
+  /* Modal: full width on mobile */
+  .modal {
+    max-width: 100%;
+    margin: 0 12px;
+    padding: 22px;
+    border-radius: 14px;
+  }
+
+  /* Txn items: wrap tighter */
+  .txn-item { padding: 12px 0; }
+  .txn-desc { font-size: 0.9rem; }
+  .txn-amount { font-size: 0.9rem; }
+
+  /* Hide the "Add Transaction" text on mobile and show just + */
+  /* (only if you want — comment out if not needed) */
+
+  /* Budget list full width */
+  .budget-header { flex-direction: column; align-items: stretch; gap: 12px; }
+  .budget-header .btn-secondary { width: 100%; }
+}
+
+/* Even smaller phones */
+@media (max-width: 480px) {
+  .main { padding: 12px 12px 90px; }
+  .topbar h1 { font-size: 1.35rem; }
+  .stat-card { padding: 16px; }
+  .stat-card h2 { font-size: 1.4rem; }
+  .card { padding: 16px; }
+  .nav-item { font-size: 0.65rem; padding: 6px 6px; }
+}
