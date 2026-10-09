@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FinTrack — Dashboard</title>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body class="dash-body">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-logo">₹</div>
+      <span>FinTrack</span>
+    </div>
+    <nav>
+      <a class="nav-item active" data-view="overview">📊 Overview</a>
+      <a class="nav-item" data-view="transactions">💳 Transactions</a>
+      <a class="nav-item" data-view="analytics">📈 Analytics</a>
+      <a class="nav-item" data-view="budgets">🎯 Budgets</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-chip">
+        <div class="avatar" id="avatar">U</div>
+        <div>
+          <p id="user-name">User</p>
+          <small id="user-email">email</small>
+        </div>
+      </div>
+      <button id="logout-btn" class="btn-logout">Logout</button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <header class="topbar">
+      <h1 id="view-title">Overview</h1>
+      <button class="btn-primary" id="open-modal">+ Add Transaction</button>
+    </header>
+
+    <!-- Overview -->
+    <section id="view-overview" class="view">
+      <div class="stat-grid">
+        <div class="stat-card balance">
+          <p class="stat-label">Total Balance</p>
+          <h2 id="stat-balance">₹0.00</h2>
+          <span class="stat-sub" id="stat-count">0 transactions</span>
+        </div>
+        <div class="stat-card income">
+          <p class="stat-label">Income</p>
+          <h2 id="stat-income">₹0.00</h2>
+          <span class="stat-sub">All-time</span>
+        </div>
+        <div class="stat-card expense">
+          <p class="stat-label">Expenses</p>
+          <h2 id="stat-expense">₹0.00</h2>
+          <span class="stat-sub">All-time</span>
+        </div>
+        <div class="stat-card savings">
+          <p class="stat-label">Savings Rate</p>
+          <h2 id="stat-savings">0%</h2>
+          <span class="stat-sub">Income saved</span>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>Recent Transactions</h3>
+          <ul id="recent-list" class="txn-list"></ul>
+        </div>
+        <div class="card">
+          <h3>Spending by Category</h3>
+          <canvas id="overviewChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- Transactions -->
+    <section id="view-transactions" class="view hidden">
+      <div class="filters">
+        <input type="text" id="search" placeholder="🔍 Search transactions..."/>
+        <select id="filter-type">
+          <option value="all">All Types</option>
+          <option value="income">Income</option>
+          <option value="expense">Expense</option>
+        </select>
+        <select id="filter-category">
+          <option value="all">All Categories</option>
+        </select>
+        <select id="sort-by">
+          <option value="date-desc">Newest First</option>
+          <option value="date-asc">Oldest First</option>
+          <option value="amount-desc">Highest Amount</option>
+          <option value="amount-asc">Lowest Amount</option>
+        </select>
+      </div>
+      <div class="card">
+        <ul id="all-list" class="txn-list"></ul>
+      </div>
+    </section>
+
+    <!-- Analytics -->
+    <section id="view-analytics" class="view hidden">
+      <div class="grid-2">
+        <div class="card">
+          <h3>Monthly Trend</h3>
+          <canvas id="trendChart"></canvas>
+        </div>
+        <div class="card">
+          <h3>Category Breakdown</h3>
+          <canvas id="categoryChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- Budgets -->
+    <section id="view-budgets" class="view hidden">
+      <div class="card">
+        <div class="budget-header">
+          <h3>Monthly Budgets</h3>
+          <button class="btn-secondary" id="add-budget">+ New Budget</button>
+        </div>
+        <div id="budget-list" class="budget-list"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal -->
+  <div class="modal-overlay hidden" id="modal">
+    <div class="modal">
+      <h2 id="modal-title">Add Transaction</h2>
+      <form id="txn-form">
+        <input type="hidden" id="txn-id"/>
+
+        <label>Type</label>
+        <div class="type-toggle">
+          <button type="button" class="type-btn active" data-type="expense">Expense</button>
+          <button type="button" class="type-btn" data-type="income">Income</button>
+        </div>
+
+        <label>Amount</label>
+        <input type="number" id="txn-amount" placeholder="0.00" step="0.01" min="0.01" required/>
+
+        <label>Description</label>
+        <input type="text" id="txn-desc" placeholder="e.g. Grocery shopping" required/>
+
+        <label>Category</label>
+        <select id="txn-category" required></select>
+
+        <label>Date</label>
+        <input type="date" id="txn-date" required/>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" id="cancel-btn">Cancel</button>
+          <button type="submit" class="btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="js/dashboard.js"></script>
+</body>
+</html>
